@@ -483,7 +483,7 @@ export default {
 				const uniqueAddressesnotls = [...new Set(addressesnotls)];
 
 				notlsresponseBody = uniqueAddressesnotls.map(address => {
-					let port = "80";
+					let port = "-1";
 					let addressid = address;
 				
 					const match = addressid.match(regex);
@@ -514,7 +514,7 @@ export default {
 					}
 
 					const httpPorts = ["8080","8880","2052","2082","2086","2095"];
-					if (!isValidIPv4(address) && port == "80") {
+					if (!isValidIPv4(address) && port == "-1") {
 						for (let httpPort of httpPorts) {
 							if (address.includes(httpPort)) {
 								port = httpPort;
@@ -522,6 +522,7 @@ export default {
 							}
 						}
 					}
+					if (port == "-1") port = "80";
 					//console.log(address, port, addressid);
 
 					if (edgetunnel.trim() === 'cmliu' && RproxyIP.trim() === 'true') {
@@ -561,7 +562,7 @@ export default {
 			}
 
 			const responseBody = uniqueAddresses.map(address => {
-				let port = "443";
+				let port = "-1";
 				let addressid = address;
 			
 				const match = addressid.match(regex);
@@ -592,7 +593,7 @@ export default {
 				}
 
 				const httpsPorts = ["2053","2083","2087","2096","8443"];
-				if (!isValidIPv4(address) && port == "443") {
+				if (!isValidIPv4(address) && port == "-1") {
 					for (let httpsPort of httpsPorts) {
 						if (address.includes(httpsPort)) {
 							port = httpsPort;
@@ -600,6 +601,8 @@ export default {
 						}
 					}
 				}
+				if (port == "-1") port = "443";
+				
 				//console.log(address, port, addressid);
 		
 				if (edgetunnel.trim() === 'cmliu' && RproxyIP.trim() === 'true') {
